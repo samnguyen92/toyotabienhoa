@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { Filter, RotateCcw, ChevronDown, Check } from "lucide-react";
+import { Filter, RotateCcw } from "lucide-react";
 
 export function FilterSidebar() {
   const router = useRouter();
@@ -26,12 +26,14 @@ export function FilterSidebar() {
     } else {
       params.set(key, value);
     }
+    // Reset to page 1 on filter change
+    params.delete("page");
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   const handlePriceRange = (min: string, max: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    if (params.get("minPrice") === min && params.get("maxPrice") === max) {
+    if (min === "" && max === "") {
       params.delete("minPrice");
       params.delete("maxPrice");
     } else {
@@ -41,6 +43,7 @@ export function FilterSidebar() {
       if (max) params.set("maxPrice", max);
       else params.delete("maxPrice");
     }
+    params.delete("page");
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
@@ -62,187 +65,201 @@ export function FilterSidebar() {
   const priceRanges = [
     { label: "Tất cả", min: "", max: "" },
     { label: "Dưới 500 triệu", min: "0", max: "500000000" },
-    { label: "500 - 700 triệu", min: "500000000", max: "700000000" },
-    { label: "700 triệu - 1 tỷ", min: "700000000", max: "1000000000" },
+    { label: "500 – 700 triệu", min: "500000000", max: "700000000" },
+    { label: "700 triệu – 1 tỷ", min: "700000000", max: "1000000000" },
     { label: "Trên 1 tỷ", min: "1000000000", max: "3000000000" },
   ];
 
+  const bodyStyles = ["Sedan", "SUV", "MPV"];
   const transmissions = ["Số tự động", "Số sàn", "CVT"];
   const fuelTypes = ["Xăng", "Dầu", "Hybrid"];
-  const bodyStyles = ["Sedan", "SUV", "MPV"];
   const years = ["2023", "2022", "2021", "2020"];
 
-  const hasActiveFilters =
-    Boolean(currentModel) ||
-    Boolean(currentMinPrice) ||
-    Boolean(currentMaxPrice) ||
-    Boolean(currentTransmission) ||
-    Boolean(currentFuelType) ||
-    Boolean(currentBodyStyle) ||
-    Boolean(currentYear);
+  const isPriceAll = !currentMinPrice && !currentMaxPrice;
 
   return (
-    <aside className="w-full bg-white rounded-2xl border border-gray-200/80 p-5 shadow-sm space-y-6">
-      {/* Header filter & Reset */}
-      <div className="flex items-center justify-between pb-4 border-b border-gray-100">
-        <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-toyota-red" />
-          <h3 className="font-bold text-sm text-charcoal uppercase tracking-wider">
-            Bộ Lọc Tìm Kiếm
-          </h3>
-        </div>
-
-        {hasActiveFilters && (
-          <button
-            onClick={resetFilters}
-            type="button"
-            className="flex items-center gap-1 text-xs font-semibold text-toyota-red hover:underline"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Xoá lọc</span>
-          </button>
-        )}
+    <aside className="w-full bg-white rounded-2xl border border-gray-150 p-5 shadow-sm space-y-6">
+      {/* Header filter title */}
+      <div className="flex items-center gap-2 pb-3 border-b border-gray-100">
+        <Filter className="w-4 h-4 text-toyota-red" />
+        <h3 className="font-extrabold text-xs sm:text-sm text-gray-900 uppercase tracking-wider">
+          BỘ LỌC TÌM KIẾM
+        </h3>
       </div>
 
-      {/* Dòng xe (Model) */}
-      <div className="space-y-2">
-        <h4 className="text-xs font-bold text-charcoal uppercase tracking-wider">
-          Dòng xe (Model)
+      {/* 1. Dòng xe (Model) */}
+      <div className="space-y-2.5">
+        <h4 className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">
+          DÒNG XE (MODEL)
         </h4>
-        <div className="grid grid-cols-2 gap-1.5 pt-1">
-          {models.map((model) => {
-            const isSelected = currentModel.toLowerCase() === model.toLowerCase();
+        <div className="grid grid-cols-2 gap-y-2 gap-x-3 pt-0.5">
+          {models.map((m) => {
+            const isChecked = currentModel.toLowerCase() === m.toLowerCase();
             return (
-              <button
-                key={model}
-                type="button"
-                onClick={() => updateQuery("model", model)}
-                className={`px-3 py-2 text-xs rounded-lg font-medium text-left transition-all flex items-center justify-between ${
-                  isSelected
-                    ? "bg-toyota-red text-white font-bold shadow-sm"
-                    : "bg-gray-50 text-charcoal-body hover:bg-gray-100"
-                }`}
+              <label
+                key={m}
+                onClick={() => updateQuery("model", m)}
+                className="flex items-center gap-2 cursor-pointer group text-xs text-gray-700 select-none"
               >
-                <span>{model}</span>
-                {isSelected && <Check className="w-3.5 h-3.5" />}
-              </button>
+                <input
+                  type="checkbox"
+                  readOnly
+                  checked={isChecked}
+                  className="w-3.5 h-3.5 rounded border-gray-300 text-toyota-red focus:ring-toyota-red cursor-pointer accent-toyota-red"
+                />
+                <span
+                  className={`group-hover:text-toyota-red transition-colors ${
+                    isChecked ? "text-toyota-red font-semibold" : ""
+                  }`}
+                >
+                  {m}
+                </span>
+              </label>
             );
           })}
         </div>
       </div>
 
-      {/* Mức giá */}
-      <div className="space-y-2 pt-2 border-t border-gray-100">
-        <h4 className="text-xs font-bold text-charcoal uppercase tracking-wider">
-          Khoảng giá
+      {/* 2. Khoảng giá */}
+      <div className="space-y-2 pt-3 border-t border-gray-100">
+        <h4 className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">
+          KHOẢNG GIÁ
         </h4>
-        <div className="space-y-1.5 pt-1">
-          {priceRanges.map((range, index) => {
+        <div className="space-y-1.5 pt-0.5">
+          {priceRanges.map((range, idx) => {
             const isSelected =
-              range.min === currentMinPrice && range.max === currentMaxPrice;
+              range.label === "Tất cả"
+                ? isPriceAll
+                : range.min === currentMinPrice && range.max === currentMaxPrice;
+
             return (
               <button
-                key={index}
+                key={idx}
                 type="button"
                 onClick={() => handlePriceRange(range.min, range.max)}
-                className={`w-full px-3 py-2 text-xs rounded-lg font-medium text-left transition-all flex items-center justify-between ${
+                className={`w-full px-3 py-2 text-xs rounded-lg transition-all flex items-center gap-2.5 text-left ${
                   isSelected
                     ? "bg-toyota-red text-white font-bold shadow-sm"
-                    : "bg-gray-50 text-charcoal-body hover:bg-gray-100"
+                    : "border border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300"
                 }`}
               >
+                <div
+                  className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${
+                    isSelected
+                      ? "border-white bg-white text-toyota-red"
+                      : "border-gray-300 bg-white"
+                  }`}
+                >
+                  {isSelected && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-toyota-red" />
+                  )}
+                </div>
                 <span>{range.label}</span>
-                {isSelected && <Check className="w-3.5 h-3.5" />}
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Kiểu dáng */}
-      <div className="space-y-2 pt-2 border-t border-gray-100">
-        <h4 className="text-xs font-bold text-charcoal uppercase tracking-wider">
-          Kiểu dáng xe
+      {/* 3. Kiểu dáng xe */}
+      <div className="space-y-2 pt-3 border-t border-gray-100">
+        <h4 className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">
+          KIỂU DÁNG XE
         </h4>
-        <div className="grid grid-cols-3 gap-1.5 pt-1">
+        <div className="flex items-center gap-2 pt-0.5">
           {bodyStyles.map((style) => {
             const isSelected = currentBodyStyle.toLowerCase() === style.toLowerCase();
             return (
-              <button
+              <label
                 key={style}
-                type="button"
                 onClick={() => updateQuery("body_style", style)}
-                className={`px-2 py-2 text-xs rounded-lg font-medium text-center transition-all ${
+                className={`flex-1 px-2.5 py-1.5 text-xs rounded-md border flex items-center justify-center gap-1.5 cursor-pointer select-none transition-all ${
                   isSelected
-                    ? "bg-toyota-red text-white font-bold shadow-sm"
-                    : "bg-gray-50 text-charcoal-body hover:bg-gray-100"
+                    ? "border-toyota-red bg-red-50 text-toyota-red font-semibold"
+                    : "border-gray-200 text-gray-700 hover:border-gray-300 bg-white"
                 }`}
               >
-                {style}
-              </button>
+                <input
+                  type="checkbox"
+                  readOnly
+                  checked={isSelected}
+                  className="w-3 h-3 rounded accent-toyota-red cursor-pointer"
+                />
+                <span>{style}</span>
+              </label>
             );
           })}
         </div>
       </div>
 
-      {/* Hộp số */}
-      <div className="space-y-2 pt-2 border-t border-gray-100">
-        <h4 className="text-xs font-bold text-charcoal uppercase tracking-wider">
-          Hộp số
+      {/* 4. Hộp số */}
+      <div className="space-y-2 pt-3 border-t border-gray-100">
+        <h4 className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">
+          HỘP SỐ
         </h4>
-        <div className="grid grid-cols-3 gap-1.5 pt-1">
+        <div className="flex items-center gap-2 pt-0.5">
           {transmissions.map((trans) => {
             const isSelected = currentTransmission.toLowerCase() === trans.toLowerCase();
             return (
-              <button
+              <label
                 key={trans}
-                type="button"
                 onClick={() => updateQuery("transmission", trans)}
-                className={`px-2 py-2 text-xs rounded-lg font-medium text-center transition-all ${
+                className={`flex-1 px-2 py-1.5 text-[11px] rounded-md border flex items-center justify-center gap-1.5 cursor-pointer select-none transition-all ${
                   isSelected
-                    ? "bg-toyota-red text-white font-bold shadow-sm"
-                    : "bg-gray-50 text-charcoal-body hover:bg-gray-100"
+                    ? "border-toyota-red bg-red-50 text-toyota-red font-semibold"
+                    : "border-gray-200 text-gray-700 hover:border-gray-300 bg-white"
                 }`}
               >
-                {trans}
-              </button>
+                <input
+                  type="checkbox"
+                  readOnly
+                  checked={isSelected}
+                  className="w-3 h-3 rounded accent-toyota-red cursor-pointer"
+                />
+                <span className="truncate">{trans}</span>
+              </label>
             );
           })}
         </div>
       </div>
 
-      {/* Nhiên liệu */}
-      <div className="space-y-2 pt-2 border-t border-gray-100">
-        <h4 className="text-xs font-bold text-charcoal uppercase tracking-wider">
-          Nhiên liệu
+      {/* 5. Nhiên liệu */}
+      <div className="space-y-2 pt-3 border-t border-gray-100">
+        <h4 className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">
+          NHIÊN LIỆU
         </h4>
-        <div className="grid grid-cols-3 gap-1.5 pt-1">
+        <div className="flex items-center gap-2 pt-0.5">
           {fuelTypes.map((fuel) => {
             const isSelected = currentFuelType.toLowerCase() === fuel.toLowerCase();
             return (
-              <button
+              <label
                 key={fuel}
-                type="button"
                 onClick={() => updateQuery("fuel_type", fuel)}
-                className={`px-2 py-2 text-xs rounded-lg font-medium text-center transition-all ${
+                className={`flex-1 px-2.5 py-1.5 text-xs rounded-md border flex items-center justify-center gap-1.5 cursor-pointer select-none transition-all ${
                   isSelected
-                    ? "bg-toyota-red text-white font-bold shadow-sm"
-                    : "bg-gray-50 text-charcoal-body hover:bg-gray-100"
+                    ? "border-toyota-red bg-red-50 text-toyota-red font-semibold"
+                    : "border-gray-200 text-gray-700 hover:border-gray-300 bg-white"
                 }`}
               >
-                {fuel}
-              </button>
+                <input
+                  type="checkbox"
+                  readOnly
+                  checked={isSelected}
+                  className="w-3 h-3 rounded accent-toyota-red cursor-pointer"
+                />
+                <span>{fuel}</span>
+              </label>
             );
           })}
         </div>
       </div>
 
-      {/* Năm sản xuất */}
-      <div className="space-y-2 pt-2 border-t border-gray-100">
-        <h4 className="text-xs font-bold text-charcoal uppercase tracking-wider">
-          Năm sản xuất
+      {/* 6. Năm sản xuất */}
+      <div className="space-y-2 pt-3 border-t border-gray-100">
+        <h4 className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">
+          NĂM SẢN XUẤT
         </h4>
-        <div className="grid grid-cols-4 gap-1.5 pt-1">
+        <div className="grid grid-cols-4 gap-2 pt-0.5">
           {years.map((y) => {
             const isSelected = currentYear === y;
             return (
@@ -250,10 +267,10 @@ export function FilterSidebar() {
                 key={y}
                 type="button"
                 onClick={() => updateQuery("year", y)}
-                className={`px-2 py-2 text-xs rounded-lg font-medium text-center transition-all ${
+                className={`py-1.5 text-xs rounded-md border text-center transition-all ${
                   isSelected
-                    ? "bg-toyota-red text-white font-bold shadow-sm"
-                    : "bg-gray-50 text-charcoal-body hover:bg-gray-100"
+                    ? "border-toyota-red bg-red-50 text-toyota-red font-bold"
+                    : "border-gray-200 text-gray-700 hover:border-gray-300 bg-white"
                 }`}
               >
                 {y}
@@ -261,6 +278,18 @@ export function FilterSidebar() {
             );
           })}
         </div>
+      </div>
+
+      {/* Bottom Button: Đặt lại bộ lọc */}
+      <div className="pt-2 border-t border-gray-100">
+        <button
+          onClick={resetFilters}
+          type="button"
+          className="w-full py-2.5 px-4 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors"
+        >
+          <RotateCcw className="w-3.5 h-3.5 text-gray-500" />
+          <span>Đặt lại bộ lọc</span>
+        </button>
       </div>
     </aside>
   );

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Phone, Menu, X, Scale } from "lucide-react";
+import { Phone, MapPin, Clock, ShieldCheck, Menu, X, Scale } from "lucide-react";
 import { useCompareStore } from "@/store/useCompareStore";
 
 export function Header() {
@@ -19,10 +19,40 @@ export function Header() {
     { name: "Tư vấn tài chính", href: "/xe-cu#bang-tinh-tra-gop" },
     { name: "Tin tức", href: "/tin-tuc" },
     { name: "Về chúng tôi", href: "/#ve-chung-toi" },
+    { name: "Liên hệ", href: "/#lien-he" },
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all">
+    <header className="sticky top-0 z-50 w-full bg-white/98 backdrop-blur-md border-b border-gray-150 shadow-sm transition-all">
+      {/* Top Bar - Thông tin đại lý & Hotline 24/7 */}
+      <div className="bg-[#111418] text-gray-300 text-[11px] py-1.5 px-4 border-b border-zinc-800 hidden xl:block">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="flex items-center space-x-6">
+            <span className="flex items-center gap-1.5 text-zinc-300">
+              <MapPin className="w-3.5 h-3.5 text-toyota-red" />
+              96 ẤP TÂY, XÃ HOÀ HƯNG, HUYỆN CÁI BÈ, TỈNH TIỀN GIANG, TP. BIÊN HÒA, ĐỒNG NAI
+            </span>
+            <span className="flex items-center gap-1.5 text-zinc-400">
+              <Clock className="w-3.5 h-3.5 text-toyota-red" />
+              Thứ 2 - Chủ Nhật: 07:30 - 17:30
+            </span>
+            <span className="flex items-center gap-1.5 text-zinc-400">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              Chúng tôi hỗ trợ 24/7 - Toyota Biên Hòa
+            </span>
+          </div>
+
+          <a
+            href="tel:0938820355"
+            className="flex items-center gap-1.5 font-bold text-white hover:text-toyota-red transition-colors"
+          >
+            <Phone className="w-3.5 h-3.5 text-toyota-red" />
+            Hotline: 24/7: 0938 820 355
+          </a>
+        </div>
+      </div>
+
+      {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo Toyota Biên Hoà */}
@@ -40,7 +70,7 @@ export function Header() {
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+          <nav className="hidden lg:flex items-center space-x-5 xl:space-x-7">
             {navLinks.map((link) => {
               const isActive =
                 link.href === "/"
@@ -53,7 +83,7 @@ export function Header() {
                   href={link.href}
                   className={`relative py-2 text-sm font-medium transition-colors ${
                     isActive
-                      ? "text-gray-900 font-semibold"
+                      ? "text-gray-900 font-bold"
                       : "text-gray-600 hover:text-toyota-red"
                   }`}
                 >
@@ -66,8 +96,8 @@ export function Header() {
             })}
           </nav>
 
-          {/* Right Action: Phone Hotline & Register Drive CTA */}
-          <div className="hidden md:flex items-center gap-6">
+          {/* Right Action: Phone Hotline Button */}
+          <div className="hidden md:flex items-center gap-4">
             {/* Compare Quick Icon (if items selected) */}
             {compareItems.length > 0 && (
               <Link
@@ -82,31 +112,21 @@ export function Header() {
               </Link>
             )}
 
-            {/* Hotline */}
+            {/* Red Phone Hotline Button matching mockup */}
             <a
               href="tel:0938820355"
-              className="flex items-center gap-2.5 group cursor-pointer"
+              className="flex items-center gap-2.5 px-4 py-2.5 rounded-lg bg-toyota-red text-white hover:bg-toyota-hover active:scale-[0.98] transition-all shadow-sm"
             >
-              <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center text-toyota-red group-hover:bg-toyota-red group-hover:text-white transition-colors">
-                <Phone className="w-4 h-4" />
-              </div>
+              <Phone className="w-4 h-4 fill-white text-white" />
               <div className="flex flex-col text-left">
-                <span className="text-sm font-bold text-toyota-red tracking-tight leading-tight group-hover:underline">
+                <span className="text-xs sm:text-sm font-bold leading-tight tracking-tight">
                   0938 820 355
                 </span>
-                <span className="text-[11px] text-gray-500 font-normal leading-tight">
+                <span className="text-[10px] text-white/90 leading-tight">
                   Tư vấn & hỗ trợ
                 </span>
               </div>
             </a>
-
-            {/* Đăng ký lái thử CTA */}
-            <Link
-              href="/xe-cu#dang-ky-lai-thu"
-              className="px-4 py-2 rounded-md bg-toyota-red text-white text-xs sm:text-sm font-semibold hover:bg-toyota-hover active:scale-[0.98] transition-all shadow-sm"
-            >
-              Đăng ký lái thử
-            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -162,18 +182,11 @@ export function Header() {
           <div className="pt-4 border-t border-gray-100 flex flex-col gap-2.5">
             <a
               href="tel:0938820355"
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-toyota-red text-toyota-red font-bold text-sm"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-toyota-red text-white font-bold text-sm shadow hover:bg-toyota-hover"
             >
               <Phone className="w-4 h-4" />
-              0938 820 355 (Tư vấn & hỗ trợ)
+              Hotline: 0938 820 355 (Tư vấn & hỗ trợ)
             </a>
-            <Link
-              href="/xe-cu#dang-ky-lai-thu"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full flex items-center justify-center px-4 py-2.5 rounded-lg bg-toyota-red text-white font-bold text-sm shadow hover:bg-toyota-hover"
-            >
-              Đăng ký lái thử
-            </Link>
           </div>
         </div>
       )}

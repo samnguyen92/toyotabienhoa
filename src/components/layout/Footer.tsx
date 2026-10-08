@@ -44,11 +44,20 @@ export function Footer() {
             </div>
 
             <div className="text-xs text-gray-400 space-y-0.5 pt-1">
-              <p className="font-medium text-gray-300">Đại lý Toyota chính hãng tại Đồng Nai</p>
-              <p className="text-gray-400">Uy tín — Chất lượng — Tận tâm</p>
+              <p className="font-semibold text-gray-200">Công ty TNHH Toyota Biên Hòa</p>
+              <p className="text-gray-400">Đại lý Toyota chính hãng • Uy tín — Chất lượng — Tận tâm</p>
             </div>
 
-            <div className="space-y-3 pt-3 text-xs text-gray-300">
+            <div className="space-y-2.5 pt-2 text-xs text-gray-300">
+              <div className="flex items-start gap-2.5">
+                <div className="w-6 h-6 rounded-full bg-red-950/60 flex items-center justify-center shrink-0 mt-0.5">
+                  <MapPin className="w-3.5 h-3.5 text-toyota-red" />
+                </div>
+                <span className="leading-relaxed text-gray-300">
+                  96 Ấp Tây, Xã Hòa Hưng, Huyện Cái Bè, Tỉnh Tiền Giang, TP. Biên Hòa, Đồng Nai
+                </span>
+              </div>
+
               <a
                 href="tel:0938820355"
                 className="flex items-center gap-2.5 text-gray-300 hover:text-white transition-colors group"
@@ -56,26 +65,29 @@ export function Footer() {
                 <div className="w-6 h-6 rounded-full bg-red-950/60 flex items-center justify-center shrink-0">
                   <Phone className="w-3.5 h-3.5 text-toyota-red" />
                 </div>
-                <span className="font-semibold text-white tracking-wide">
+                <span className="font-bold text-white tracking-wide">
                   0938 820 355
                 </span>
               </a>
 
-              <div className="flex items-start gap-2.5">
-                <div className="w-6 h-6 rounded-full bg-red-950/60 flex items-center justify-center shrink-0 mt-0.5">
-                  <MapPin className="w-3.5 h-3.5 text-toyota-red" />
+              <a
+                href="mailto:info@toyotabienhoa.com.vn"
+                className="flex items-center gap-2.5 text-gray-300 hover:text-white transition-colors group"
+              >
+                <div className="w-6 h-6 rounded-full bg-red-950/60 flex items-center justify-center shrink-0">
+                  <span className="text-xs text-toyota-red font-bold">@</span>
                 </div>
-                <span className="leading-relaxed text-gray-300">
-                  Số 08, Đường Võ Thị Sáu, P. Thống Nhất, TP. Biên Hòa, Đồng Nai
+                <span className="text-gray-300">
+                  info@toyotabienhoa.com.vn
                 </span>
-              </div>
+              </a>
 
               <div className="flex items-start gap-2.5">
                 <div className="w-6 h-6 rounded-full bg-red-950/60 flex items-center justify-center shrink-0 mt-0.5">
                   <Clock className="w-3.5 h-3.5 text-toyota-red" />
                 </div>
                 <span className="text-gray-300">
-                  Giờ làm việc: 7:30 - 17:30 (Thứ 2 - Thứ 7)
+                  7:30 - 17:30 (Thứ 2 - Chủ Nhật)
                 </span>
               </div>
             </div>
