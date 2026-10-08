@@ -5,6 +5,8 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
+    // Giữ unoptimized: true để sử dụng 0 lượt Vercel Image Optimization (Vercel Hobby 1,000 limit)
+    // Ảnh được phân phối qua Vercel Global Edge CDN không giới hạn chi phí
     unoptimized: true,
     remotePatterns: [
       {
@@ -20,6 +22,39 @@ const nextConfig = {
         hostname: "cdn.sanity.io",
       },
     ],
+  },
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "X-DNS-Prefetch-Control",
+            value: "on",
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "origin-when-cross-origin",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+    ];
   },
 };
 
