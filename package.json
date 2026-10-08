@@ -3,24 +3,33 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "/usr/local/bin/node ./node_modules/next/dist/bin/next dev",
+    "build": "/usr/local/bin/node ./node_modules/next/dist/bin/next build",
+    "start": "/usr/local/bin/node ./node_modules/next/dist/bin/next start",
+    "lint": "next lint",
+    "seed": "/usr/local/bin/node scripts/seed-sanity.mjs"
   },
   "dependencies": {
+    "@sanity/image-url": "^2.1.1",
+    "clsx": "^2.1.1",
+    "commander": "^11.1.0",
+    "lucide-react": "^1.52.0",
+    "next": "^14.2.35",
+    "next-sanity": "^9.12.3",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.35"
+    "sanity": "^3.99.0",
+    "tailwind-merge": "^3.7.0",
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.35",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.35"
+    "typescript": "^5"
   }
 }
