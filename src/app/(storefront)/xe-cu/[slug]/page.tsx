@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
   ShieldCheck,
@@ -16,6 +17,7 @@ import {
   MapPin,
   Clock,
   Sparkles,
+  ArrowRight,
 } from "lucide-react";
 import { getCarBySlug, getAllCars } from "@/services/carService";
 import { formatVND, formatMileage, getCarImageUrl } from "@/data/mockCars";
