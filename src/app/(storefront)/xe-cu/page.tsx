@@ -64,8 +64,21 @@ export default async function CarListingPage({ searchParams }: ListingPageProps)
       {/* =========================================================================
           1. HEADER BANNER: BREADCRUMB, TITLE, CALLIGRAPHY SLOGAN & SHOWROOM IMAGE
           ========================================================================= */}
-      <section className="relative bg-white border-b border-gray-150 overflow-hidden pt-6 pb-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-[#FAFAFC] border-b border-gray-150 overflow-hidden pt-8 pb-12">
+        {/* Dealership Showroom Background (Right side, seamlessly extending to edges) */}
+        <div className="absolute right-0 top-0 bottom-0 w-full lg:w-[58%] pointer-events-none z-0">
+          <Image
+            src="/images/showroom-hero.jpg"
+            alt="Toyota Biên Hòa Showroom"
+            fill
+            priority
+            className="object-cover object-right-top"
+          />
+          {/* Smooth gradient fading into white on the left */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAFAFC] via-[#FAFAFC]/90 to-transparent lg:from-[#FAFAFC] lg:via-[#FAFAFC]/60 lg:to-transparent" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
           {/* Breadcrumb */}
           <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-4">
             <Link href="/" className="hover:text-toyota-red transition-colors">
@@ -76,10 +89,10 @@ export default async function CarListingPage({ searchParams }: ListingPageProps)
             <span className="text-gray-400">—</span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-8">
-            {/* Title & Description (Left) */}
+          {/* Heading Row with Floating Calligraphy Quote in center-right */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mb-6">
             <div className="lg:col-span-7 space-y-3">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 tracking-tight leading-[1.15]">
+              <h1 className="text-3xl sm:text-4xl lg:text-[46px] font-black text-gray-900 tracking-tight leading-[1.12]">
                 Kho Xe Đã Qua Sử Dụng<br />
                 <span className="text-toyota-red">Chính Hãng Toyota</span>
               </h1>
@@ -89,40 +102,28 @@ export default async function CarListingPage({ searchParams }: ListingPageProps)
               </div>
             </div>
 
-            {/* Calligraphy Quote & Showroom Backdrop (Right) */}
-            <div className="lg:col-span-5 relative flex items-center justify-end">
-              <div className="relative w-full h-44 sm:h-52 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
-                <Image
-                  src="/images/showroom-hero.jpg"
-                  alt="Showroom Toyota Biên Hòa"
-                  fill
-                  priority
-                  className="object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/40 to-transparent" />
-
-                {/* Elegant Handwritten / Script Slogan */}
-                <div className="absolute top-4 left-4 z-10 flex flex-col font-serif italic text-gray-800 drop-shadow-sm select-none">
-                  <span className="text-lg font-bold text-gray-900 transform -rotate-3">
-                    Xe đẹp
-                  </span>
-                  <span className="text-base font-semibold text-toyota-red pl-2 transform -rotate-2">
-                    Chất lượng thật
-                  </span>
-                  <span className="text-sm font-medium text-gray-700 pl-4 transform -rotate-1">
-                    Hành trình an tâm
-                  </span>
-                </div>
+            {/* Elegant Handwritten / Script Slogan floating in the sky above cars */}
+            <div className="lg:col-span-5 hidden sm:flex justify-center lg:justify-start lg:pl-6 pt-3 select-none pointer-events-none">
+              <div className="flex flex-col font-serif italic drop-shadow-sm leading-tight text-center lg:text-left transform -rotate-3">
+                <span className="text-xl sm:text-2xl font-bold text-gray-900">
+                  Xe đẹp
+                </span>
+                <span className="text-xl sm:text-2xl font-bold text-toyota-red pl-4">
+                  Chất lượng thật
+                </span>
+                <span className="text-base sm:text-lg font-semibold text-gray-700 pl-8">
+                  Hành trình an tâm
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Quick Search Floating Filter Bar */}
-          <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-gray-200">
+          {/* Quick Search Floating Filter Bar (Width fits 4 selects + button) */}
+          <div className="max-w-3xl bg-white rounded-2xl p-4 sm:p-5 shadow-[0_12px_32px_rgba(0,0,0,0.06)] border border-gray-200">
             <form
               action="/xe-cu"
               method="GET"
-              className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 items-end"
+              className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 items-end"
             >
               <div>
                 <label className="block text-[11px] font-semibold text-gray-500 mb-1">
@@ -196,7 +197,7 @@ export default async function CarListingPage({ searchParams }: ListingPageProps)
                 </select>
               </div>
 
-              <div className="col-span-2 md:col-span-4 lg:col-span-1">
+              <div className="col-span-2 sm:col-span-4 lg:col-span-1">
                 <button
                   type="submit"
                   className="w-full h-10 px-3 bg-toyota-red hover:bg-toyota-hover text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm active:scale-[0.98] transition-all"
