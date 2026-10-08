@@ -139,33 +139,28 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-xs text-gray-400">
               <li>
-                <Link href="/xe-cu#bang-tinh-tra-gop" className="hover:text-white transition-colors">
-                  Tư vấn tài chính
+                <Link href="/tu-van-tai-chinh" className="hover:text-white transition-colors">
+                  Tư vấn tài chính TFS
                 </Link>
               </li>
               <li>
-                <Link href="/xe-cu#dang-ky-lai-thu" className="hover:text-white transition-colors">
-                  Đăng ký lái thử
+                <Link href="/dich-vu" className="hover:text-white transition-colors">
+                  Bảo dưỡng & Kiểm định 176 điểm
                 </Link>
               </li>
               <li>
-                <Link href="/xe-cu#bao-duong" className="hover:text-white transition-colors">
-                  Bảo dưỡng & sửa chữa
+                <Link href="/dich-vu" className="hover:text-white transition-colors">
+                  Đổi xe cũ lấy xe mới (Trade-in)
                 </Link>
               </li>
               <li>
-                <Link href="/xe-cu#phu-tung" className="hover:text-white transition-colors">
-                  Phụ tùng chính hãng
+                <Link href="/ve-chung-toi" className="hover:text-white transition-colors">
+                  Về Toyota Biên Hòa
                 </Link>
               </li>
               <li>
-                <Link href="/xe-cu#dinh-gia" className="hover:text-white transition-colors">
-                  Đổi xe cũ lấy xe mới
-                </Link>
-              </li>
-              <li>
-                <Link href="/xe-cu#lien-he" className="hover:text-white transition-colors">
-                  Liên hệ
+                <Link href="/lien-he" className="hover:text-white transition-colors">
+                  Liên hệ & Địa chỉ showroom
                 </Link>
               </li>
             </ul>

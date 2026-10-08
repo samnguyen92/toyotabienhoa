@@ -15,11 +15,11 @@ export function Header() {
   const navLinks = [
     { name: "Trang chủ", href: "/" },
     { name: "Xe đã qua sử dụng", href: "/xe-cu" },
-    { name: "Dịch vụ", href: "/xe-cu#dich-vu" },
-    { name: "Tư vấn tài chính", href: "/xe-cu#bang-tinh-tra-gop" },
+    { name: "Dịch vụ", href: "/dich-vu" },
+    { name: "Tư vấn tài chính", href: "/tu-van-tai-chinh" },
     { name: "Tin tức", href: "/tin-tuc" },
-    { name: "Về chúng tôi", href: "/#ve-chung-toi" },
-    { name: "Liên hệ", href: "/#lien-he" },
+    { name: "Về chúng tôi", href: "/ve-chung-toi" },
+    { name: "Liên hệ", href: "/lien-he" },
   ];
 
   return (
