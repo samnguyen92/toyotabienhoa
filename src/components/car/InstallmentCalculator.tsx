@@ -211,7 +211,7 @@ Lãi suất: ${interestRateYear}%/năm
                 </button>
 
                 <a
-                  href={`https://zalo.me/0918565656`}
+                  href={`https://zalo.me/0938820355`}
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center justify-center gap-1.5 py-2.5 px-3 bg-[#0068FF] hover:bg-blue-600 text-white font-bold text-xs rounded-xl transition-colors"
@@ -221,11 +221,11 @@ Lãi suất: ${interestRateYear}%/năm
               </div>
 
               <a
-                href="tel:0918565656"
+                href="tel:0938820355"
                 className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-toyota-red text-white font-bold text-xs sm:text-sm rounded-xl hover:bg-toyota-hover active:scale-[0.98] transition-all shadow-md"
               >
                 <PhoneCall className="w-4 h-4" />
-                <span>Gọi Tư Vấn Gói Vay: 0918 565 656</span>
+                <span>Gọi Tư Vấn Gói Vay: 0938 820 355</span>
               </a>
               <p className="text-[10px] text-gray-400 text-center mt-1">
                 Chuyên viên tín dụng Toyota Biên Hoà sẽ hỗ trợ hồ sơ miễn phí trong 15 phút.

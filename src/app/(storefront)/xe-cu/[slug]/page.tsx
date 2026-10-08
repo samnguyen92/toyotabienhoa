@@ -90,8 +90,8 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
       seller: {
         "@type": "AutoDealer",
         name: "Toyota Biên Hoà",
-        telephone: "0918565656",
-        address: "Số A17, Xa Lộ Hà Nội, KP 5, P. Tân Hiệp, TP. Biên Hoà, Đồng Nai",
+        telephone: "0938820355",
+        address: "96 Ấp Tây, Xã Hòa Hưng, Huyện Cái Bè, Tiền Giang & TP. Biên Hoà, Đồng Nai",
       },
     },
   };
@@ -288,11 +288,11 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
               {/* Action Buttons */}
               <div className="space-y-3 pt-2 border-t border-gray-100">
                 <a
-                  href="tel:0918565656"
+                  href="tel:0938820355"
                   className="w-full flex items-center justify-center gap-2 py-3.5 px-4 bg-toyota-red text-white text-sm font-bold rounded-xl shadow-md hover:bg-toyota-hover active:scale-[0.98] transition-all"
                 >
                   <Phone className="w-4 h-4" />
-                  <span>Gọi Hotline: 0918 565 656</span>
+                  <span>Hotline: 0938 820 355</span>
                 </a>
 
                 <a
@@ -315,7 +315,7 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
                 <div className="flex items-start gap-2">
                   <MapPin className="w-4 h-4 text-toyota-red flex-shrink-0 mt-0.5" />
                   <span>
-                    <strong>Toyota Biên Hoà:</strong> Số A17, Xa Lộ Hà Nội, P. Tân Hiệp, TP. Biên Hoà, Đồng Nai
+                    <strong>Toyota Biên Hoà:</strong> 96 Ấp Tây, Xã Hòa Hưng, Huyện Cái Bè, Tiền Giang & TP. Biên Hoà, Đồng Nai
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -335,7 +335,7 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
                 Toyota Biên Hoà hỗ trợ mang xe tới tận nhà khách hàng tại Biên Hoà, Bình Dương, Long Thành để lái thử và trải nghiệm.
               </p>
               <a
-                href="tel:0918565656"
+                href="tel:0938820355"
                 className="inline-flex items-center gap-2 text-xs font-bold text-white underline hover:text-toyota-red transition-colors"
               >
                 Đặt hẹn lái thử ngay →
@@ -366,6 +366,55 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
           </div>
         )}
       </div>
+
+      {/* Bottom Valuation / Trade-in Banner */}
+      <section className="mt-16 relative overflow-hidden bg-[#0A0D14] text-white py-14 sm:py-18">
+        <div className="absolute right-0 top-0 bottom-0 w-full lg:w-1/2 pointer-events-none">
+          <Image
+            src="/images/cta-camry.jpg"
+            alt="Toyota Camry Headlight"
+            fill
+            className="object-cover object-center lg:object-right opacity-85"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0A0D14] via-[#0A0D14]/85 to-transparent lg:from-[#0A0D14] lg:via-[#0A0D14]/50 lg:to-transparent" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+          <div className="max-w-xl space-y-4">
+            <div className="flex items-center gap-2 text-xs font-bold tracking-widest text-toyota-red uppercase">
+              <span className="w-5 h-0.5 bg-toyota-red inline-block" />
+              <span>TOYOTA BIÊN HÒA</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
+              Bạn Có Nhu Cầu Định Giá Hoặc Bán Lại Chiếc Xe Của Mình?
+            </h2>
+
+            <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
+              Toyota Biên Hòa hỗ trợ định giá xe nhanh chóng, minh bạch và chuyên nghiệp. Liên hệ ngay để được tư vấn và hỗ trợ tốt nhất.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-3">
+              <a
+                href="tel:0938820355"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-toyota-red hover:bg-toyota-hover text-white text-xs sm:text-sm font-bold shadow-md transition-all active:scale-[0.98]"
+              >
+                <Phone className="w-4 h-4" />
+                <span>Hotline: 0938 820 355</span>
+              </a>
+
+              <Link
+                href="/xe-cu#dinh-gia"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-gray-700 bg-black/40 hover:bg-white/10 text-gray-200 hover:text-white text-xs sm:text-sm font-semibold transition-all group"
+              >
+                <MessageSquare className="w-4 h-4 text-gray-400 group-hover:text-white" />
+                <span>Được tư vấn miễn phí</span>
+                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

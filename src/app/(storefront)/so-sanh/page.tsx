@@ -164,9 +164,9 @@ export default function ComparePage() {
                               Xem chi tiết
                             </Link>
                             <a
-                              href="tel:0918565656"
+                              href="tel:0938820355"
                               className="p-2 rounded-lg bg-toyota-red/10 text-toyota-red hover:bg-toyota-red hover:text-white transition-colors"
-                              title="Gọi tư vấn"
+                              title="Gọi tư vấn: 0938 820 355"
                             >
                               <Phone className="w-4 h-4" />
                             </a>
