@@ -1,4 +1,4 @@
-export type Transmission = "Số tự động" | "Số sàn" | "CVT";
+export type Transmission = "Số tự động" | "Tự động" | "Số sàn" | "CVT";
 export type FuelType = "Xăng" | "Dầu" | "Hybrid";
 export type BodyStyle = "Sedan" | "SUV" | "Hatchback" | "MPV";
 export type CarStatus = "Đang bán" | "Đã nhận cọc" | "Đã bán";
