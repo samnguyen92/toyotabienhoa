@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Phone, MessageCircle, CalendarCheck, Sparkles } from "lucide-react";
+import { Phone, MessageCircle, CalendarCheck } from "lucide-react";
 import { ConsultationModal } from "@/components/common/ConsultationModal";
 
 export function MobileContactBar() {

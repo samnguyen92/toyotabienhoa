@@ -329,9 +329,13 @@ export function formatMileage(km: number): string {
 }
 
 // Helper lấy URL ảnh an toàn
-export function getCarImageUrl(image: any): string {
+export function getCarImageUrl(
+  image?: string | { url?: string; asset?: { url?: string } } | null
+): string {
   if (typeof image === "string") return image;
-  if (image?.url) return image.url;
-  if (image?.asset?.url) return image.asset.url;
+  if (image && typeof image === "object") {
+    if (image.url) return image.url;
+    if (image.asset?.url) return image.asset.url;
+  }
   return "/images/camry-2022.jpg";
 }

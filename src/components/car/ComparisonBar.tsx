@@ -7,7 +7,7 @@ import { useCompareStore } from "@/store/useCompareStore";
 
 export function ComparisonBar() {
   const [mounted, setMounted] = useState(false);
-  const { selectedCarIds, removeCar, clearCompare } = useCompareStore();
+  const { selectedCarIds, clearCompare } = useCompareStore();
 
   useEffect(() => {
     setMounted(true);

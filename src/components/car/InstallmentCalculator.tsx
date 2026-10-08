@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useId } from "react";
-import { Calculator, DollarSign, Calendar, Percent, ShieldCheck, PhoneCall } from "lucide-react";
+import { Calculator, ShieldCheck, PhoneCall } from "lucide-react";
 import { formatVND } from "@/data/mockCars";
 
 interface InstallmentCalculatorProps {

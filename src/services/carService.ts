@@ -1,8 +1,9 @@
 import { client } from "../../sanity/sanity.client";
 import { Car, CarFilterParams } from "@/types/car";
-import { MOCK_CARS, getCarImageUrl } from "@/data/mockCars";
+import { MOCK_CARS } from "@/data/mockCars";
 
 // Helper chuyển đổi document từ Sanity sang Car interface
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapSanityCar(item: any): Car {
   return {
     _id: item._id,

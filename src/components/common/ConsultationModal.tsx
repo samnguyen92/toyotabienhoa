@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, Phone, Calendar, User, CheckCircle2, ShieldCheck, Car } from "lucide-react";
+import { X, Phone, User, CheckCircle2, ShieldCheck } from "lucide-react";
 
 interface ConsultationModalProps {
   isOpen: boolean;
