@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Phone, Clock, MapPin, Menu, X, Car, Scale, ShieldCheck } from "lucide-react";
+import { Phone, Menu, X, Scale } from "lucide-react";
 import { useCompareStore } from "@/store/useCompareStore";
 
 export function Header() {
@@ -15,141 +15,124 @@ export function Header() {
   const navLinks = [
     { name: "Trang chủ", href: "/" },
     { name: "Xe đã qua sử dụng", href: "/xe-cu" },
-    { name: "So sánh xe", href: "/so-sanh", badge: compareItems.length },
-    { name: "Cam kết chất lượng", href: "/#cam-ket" },
-    { name: "Dự toán trả góp", href: "/#tinh-tra-gop" },
-    { name: "Quản trị CMS", href: "/studio", isExternal: false },
+    { name: "Dịch vụ", href: "/xe-cu#dich-vu" },
+    { name: "Tư vấn tài chính", href: "/xe-cu#bang-tinh-tra-gop" },
+    { name: "Tin tức", href: "/tin-tuc" },
+    { name: "Về chúng tôi", href: "/#ve-chung-toi" },
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all">
-      {/* Top Bar - Thông tin đại lý */}
-      <div className="bg-charcoal-heading text-gray-300 text-xs py-2 px-4 border-b border-zinc-800 hidden md:block">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-6">
-            <span className="flex items-center gap-1.5 text-zinc-300">
-              <MapPin className="w-3.5 h-3.5 text-toyota-red" />
-              Số A17, Xa lộ Hà Nội, KP 5, P. Tân Hiệp, TP. Biên Hoà, Đồng Nai
-            </span>
-            <span className="flex items-center gap-1.5 text-zinc-400">
-              <Clock className="w-3.5 h-3.5 text-toyota-red" />
-              Thứ 2 - Chủ Nhật: 07:30 - 17:30
-            </span>
-          </div>
-
-          <div className="flex items-center space-x-6">
-            <span className="flex items-center gap-1.5 text-zinc-300">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              Chương trình Toyota Sure - 176 hạng mục kiểm tra
-            </span>
-            <a
-              href="tel:0918565656"
-              className="flex items-center gap-1.5 font-semibold text-white hover:text-toyota-red transition-colors"
-            >
-              <Phone className="w-3.5 h-3.5 text-toyota-red" />
-              Hotline 24/7: 0918 565 656
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Navigation */}
+    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo Toyota Biên Hoà */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative h-12 w-48 sm:h-14 sm:w-56 transition-transform duration-200 group-hover:scale-[1.02]">
+          <Link href="/" className="flex items-center gap-3 shrink-0">
+            <div className="relative h-11 w-44 sm:h-12 sm:w-52 transition-transform duration-200 hover:scale-[1.01]">
               <Image
                 src="/logo-tbh.png"
                 alt="Toyota Biên Hoà"
                 fill
                 priority
                 className="object-contain object-left"
-                sizes="(max-width: 640px) 192px, 224px"
+                sizes="(max-width: 640px) 176px, 208px"
               />
-            </div>
-            <div className="hidden xl:flex flex-col border-l border-gray-200 pl-3">
-              <span className="text-xs font-bold tracking-wider text-charcoal uppercase">
-                Trung Tâm Xe Đã Qua Sử Dụng
-              </span>
-              <span className="text-[10px] text-gray-500 font-medium">
-                Chính Hãng - Uy Tín - An Tâm
-              </span>
             </div>
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             {navLinks.map((link) => {
               const isActive =
                 link.href === "/"
                   ? pathname === "/"
-                  : pathname.startsWith(link.href);
+                  : pathname.startsWith(link.href) && link.href !== "/";
 
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`relative px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                  className={`relative py-2 text-sm font-medium transition-colors ${
                     isActive
-                      ? "text-toyota-red bg-toyota-light"
-                      : "text-charcoal-body hover:text-toyota-red hover:bg-gray-50"
+                      ? "text-gray-900 font-semibold"
+                      : "text-gray-600 hover:text-toyota-red"
                   }`}
                 >
-                  <span className="flex items-center gap-1.5">
-                    {link.name}
-                    {link.badge !== undefined && link.badge > 0 && (
-                      <span className="inline-flex items-center justify-center w-5 h-5 text-[11px] font-bold text-white bg-toyota-red rounded-full">
-                        {link.badge}
-                      </span>
-                    )}
-                  </span>
+                  {link.name}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-toyota-red rounded-full" />
+                  )}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Action CTAs */}
-          <div className="hidden sm:flex items-center gap-3">
-            <Link
-              href="/so-sanh"
-              className="relative p-2.5 rounded-lg border border-gray-200 text-charcoal-muted hover:text-toyota-red hover:border-toyota-red transition-all"
-              title="So sánh xe"
-            >
-              <Scale className="w-5 h-5" />
-              {compareItems.length > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-toyota-red text-[11px] font-bold text-white animate-pulse">
+          {/* Right Action: Phone Hotline & Register Drive CTA */}
+          <div className="hidden md:flex items-center gap-6">
+            {/* Compare Quick Icon (if items selected) */}
+            {compareItems.length > 0 && (
+              <Link
+                href="/so-sanh"
+                className="relative p-2 rounded-lg border border-gray-200 text-gray-600 hover:text-toyota-red hover:border-toyota-red transition-all"
+                title="So sánh xe"
+              >
+                <Scale className="w-4 h-4" />
+                <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-toyota-red text-[10px] font-bold text-white">
                   {compareItems.length}
                 </span>
-              )}
-            </Link>
+              </Link>
+            )}
 
+            {/* Hotline */}
             <a
-              href="tel:0918565656"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-toyota-red text-white text-sm font-bold shadow-md hover:bg-toyota-hover active:scale-[0.98] transition-all"
+              href="tel:0938820355"
+              className="flex items-center gap-2.5 group cursor-pointer"
             >
-              <Phone className="w-4 h-4" />
-              <span>0918 565 656</span>
+              <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center text-toyota-red group-hover:bg-toyota-red group-hover:text-white transition-colors">
+                <Phone className="w-4 h-4" />
+              </div>
+              <div className="flex flex-col text-left">
+                <span className="text-sm font-bold text-toyota-red tracking-tight leading-tight group-hover:underline">
+                  0938 820 355
+                </span>
+                <span className="text-[11px] text-gray-500 font-normal leading-tight">
+                  Tư vấn & hỗ trợ
+                </span>
+              </div>
             </a>
+
+            {/* Đăng ký lái thử CTA */}
+            <Link
+              href="/xe-cu#dang-ky-lai-thu"
+              className="px-4 py-2 rounded-md bg-toyota-red text-white text-xs sm:text-sm font-semibold hover:bg-toyota-hover active:scale-[0.98] transition-all shadow-sm"
+            >
+              Đăng ký lái thử
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex items-center sm:hidden gap-2">
-            <Link
-              href="/so-sanh"
-              className="relative p-2 text-charcoal hover:text-toyota-red"
-            >
-              <Scale className="w-6 h-6" />
-              {compareItems.length > 0 && (
+          <div className="flex items-center lg:hidden gap-3">
+            {compareItems.length > 0 && (
+              <Link
+                href="/so-sanh"
+                className="relative p-2 text-gray-700 hover:text-toyota-red"
+              >
+                <Scale className="w-5 h-5" />
                 <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-toyota-red text-[10px] font-bold text-white">
                   {compareItems.length}
                 </span>
-              )}
-            </Link>
+              </Link>
+            )}
+            <a
+              href="tel:0938820355"
+              className="p-2 text-toyota-red"
+              title="Gọi hotline"
+            >
+              <Phone className="w-5 h-5" />
+            </a>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               type="button"
-              className="p-2 rounded-md text-charcoal hover:text-toyota-red hover:bg-gray-100 focus:outline-none"
+              className="p-2 rounded-md text-gray-700 hover:text-toyota-red focus:outline-none"
               aria-label="Toggle Navigation"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -160,40 +143,37 @@ export function Header() {
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-gray-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-xl animate-fadeIn">
-          <div className="py-2 text-xs text-gray-500 border-b border-gray-100 flex items-center gap-1.5">
-            <MapPin className="w-3.5 h-3.5 text-toyota-red flex-shrink-0" />
-            <span>Biên Hoà, Đồng Nai • Mở cửa 07:30 - 17:30</span>
-          </div>
-
+        <div className="lg:hidden border-t border-gray-100 bg-white px-5 pt-3 pb-6 space-y-2 shadow-xl animate-fadeIn">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-between px-3 py-2.5 rounded-md text-base font-semibold ${
+              className={`flex items-center justify-between px-3 py-2.5 rounded-md text-sm font-medium ${
                 pathname === link.href
-                  ? "text-toyota-red bg-toyota-light"
-                  : "text-charcoal hover:bg-gray-50"
+                  ? "text-toyota-red bg-red-50 font-semibold"
+                  : "text-gray-700 hover:bg-gray-50"
               }`}
             >
               <span>{link.name}</span>
-              {link.badge !== undefined && link.badge > 0 && (
-                <span className="px-2 py-0.5 text-xs font-bold text-white bg-toyota-red rounded-full">
-                  {link.badge} xe
-                </span>
-              )}
             </Link>
           ))}
 
-          <div className="pt-4 border-t border-gray-100">
+          <div className="pt-4 border-t border-gray-100 flex flex-col gap-2.5">
             <a
-              href="tel:0918565656"
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-toyota-red text-white font-bold text-sm shadow hover:bg-toyota-hover"
+              href="tel:0938820355"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-toyota-red text-toyota-red font-bold text-sm"
             >
               <Phone className="w-4 h-4" />
-              Gọi Hotline: 0918 565 656
+              0938 820 355 (Tư vấn & hỗ trợ)
             </a>
+            <Link
+              href="/xe-cu#dang-ky-lai-thu"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full flex items-center justify-center px-4 py-2.5 rounded-lg bg-toyota-red text-white font-bold text-sm shadow hover:bg-toyota-hover"
+            >
+              Đăng ký lái thử
+            </Link>
           </div>
         </div>
       )}

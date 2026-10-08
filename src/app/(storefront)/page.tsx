@@ -2,172 +2,215 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  ShieldCheck,
-  CheckCircle,
-  FileCheck,
-  Wrench,
-  ArrowRight,
   Search,
   Phone,
-  Sparkles,
-  Award,
-  ChevronRight,
+  ArrowRight,
+  Calendar,
+  Car as CarIcon,
+  Gauge,
+  Shield,
+  ShieldCheck,
+  Target,
+  Headphones,
+  MessageSquare,
 } from "lucide-react";
-import { getFeaturedCars, getAllCars } from "@/services/carService";
+import { getFeaturedCars } from "@/services/carService";
 import { CarCard } from "@/components/car/CarCard";
 
 export default async function HomePage() {
-  const allCars = await getAllCars();
   const featuredCars = await getFeaturedCars(6);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* 1. HERO BANNER */}
-      <section className="relative bg-gradient-to-br from-charcoal-dark via-charcoal to-zinc-900 text-white overflow-hidden py-16 sm:py-24">
-        {/* Subtle pattern background */}
-        <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#EB0A1E_1px,transparent_1px)] [background-size:24px_24px]" />
-        
-        {/* Decorative ambient glow */}
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-toyota-red/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-red-600/15 rounded-full blur-3xl pointer-events-none" />
+    <div className="flex flex-col min-h-screen bg-white">
+      {/* =========================================================================
+          SECTION 1: HERO BANNER WITH SHOWROOM BACKDROP & FLOATING CAR SPOTLIGHT
+          ========================================================================= */}
+      <section className="relative overflow-hidden bg-[#FAFAFA] border-b border-gray-100">
+        {/* Architectural Showroom Background (Right side) */}
+        <div className="absolute right-0 top-0 bottom-0 w-full lg:w-3/5 pointer-events-none">
+          <Image
+            src="/images/showroom-hero.jpg"
+            alt="Toyota Biên Hoà Showroom"
+            fill
+            priority
+            className="object-cover object-right opacity-90"
+          />
+          {/* Subtle gradient to seamlessly blend text on left */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAFAFA] via-[#FAFAFA]/90 to-transparent lg:from-[#FAFAFA] lg:via-[#FAFAFA]/65 lg:to-transparent" />
+        </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Column: Heading & Quick Search */}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left Column: Heading, Subtitle & Floating Search Box */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold backdrop-blur-md text-gray-200">
-                <Sparkles className="w-3.5 h-3.5 text-toyota-red" />
-                <span>Toyota Sure • Trung Tâm Xe Cũ Chính Hãng Biên Hoà</span>
+              {/* Red tag line */}
+              <div className="flex items-center gap-2 text-xs font-bold tracking-widest text-toyota-red uppercase">
+                <span className="w-5 h-0.5 bg-toyota-red inline-block" />
+                <span>UY TÍN • CHẤT LƯỢNG • AN TÂM</span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
-                An Tâm Mua Bán Xe{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-toyota-red to-red-400">
-                  Đã Qua Sử Dụng
-                </span>{" "}
-                Tại Toyota Biên Hoà
+              {/* Main Heading */}
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 tracking-tight leading-[1.15]">
+                Xe Đã Qua Sử Dụng<br />
+                <span className="text-toyota-red">Toyota Chính Hãng</span>
               </h1>
 
-              <p className="text-base sm:text-lg text-gray-300 max-w-xl font-normal leading-relaxed">
-                Mỗi chiếc xe bán ra đều trải qua quy trình kiểm định nghiêm ngặt 176 hạng mục bởi kỹ sư Toyota Việt Nam. Bảo hành chính hãng lên tới 1 năm, hỗ trợ trả góp đến 80%.
+              {/* Subtitle */}
+              <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-w-xl">
+                Chọn xe đã qua sử dụng tại Toyota Biên Hòa để tận hưởng chất lượng, sự an tâm và giá trị bền vững từ thương hiệu Toyota.
               </p>
 
-              {/* Quick Search Form */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-white/95 text-charcoal shadow-2xl backdrop-blur-md border border-white/20">
-                <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">
-                  Tìm kiếm nhanh theo nhu cầu:
-                </div>
+              {/* Floating Search Filter Card */}
+              <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-[0_12px_32px_rgba(0,0,0,0.06)] border border-gray-100 max-w-2xl">
                 <form
                   action="/xe-cu"
                   method="GET"
-                  className="grid grid-cols-1 sm:grid-cols-3 gap-3"
+                  className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 items-end"
                 >
+                  {/* Select Hãng xe */}
                   <div>
-                    <label className="block text-xs font-semibold text-gray-600 mb-1">
+                    <label className="block text-[11px] font-semibold text-gray-500 mb-1">
+                      Hãng xe
+                    </label>
+                    <select
+                      name="brand"
+                      defaultValue=""
+                      className="w-full h-10 px-2.5 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:ring-1 focus:ring-toyota-red"
+                    >
+                      <option value="">Tất cả hãng xe</option>
+                      <option value="Toyota">Toyota</option>
+                    </select>
+                  </div>
+
+                  {/* Select Dòng xe */}
+                  <div>
+                    <label className="block text-[11px] font-semibold text-gray-500 mb-1">
                       Dòng xe
                     </label>
                     <select
                       name="model"
-                      className="w-full h-11 px-3 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-toyota-red font-medium"
                       defaultValue=""
+                      className="w-full h-10 px-2.5 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:ring-1 focus:ring-toyota-red"
                     >
                       <option value="">Tất cả dòng xe</option>
-                      <option value="Camry">Toyota Camry</option>
-                      <option value="Fortuner">Toyota Fortuner</option>
-                      <option value="Corolla Cross">Toyota Corolla Cross</option>
-                      <option value="Vios">Toyota Vios</option>
-                      <option value="Veloz Cross">Toyota Veloz Cross</option>
-                      <option value="Innova">Toyota Innova</option>
-                      <option value="Raize">Toyota Raize</option>
+                      <option value="Camry">Camry</option>
+                      <option value="Fortuner">Fortuner</option>
+                      <option value="Corolla Cross">Corolla Cross</option>
+                      <option value="Veloz Cross">Veloz Cross</option>
+                      <option value="Wigo">Wigo</option>
+                      <option value="Yaris Cross">Yaris Cross</option>
                     </select>
                   </div>
 
+                  {/* Select Năm sản xuất */}
                   <div>
-                    <label className="block text-xs font-semibold text-gray-600 mb-1">
-                      Mức giá tối đa
+                    <label className="block text-[11px] font-semibold text-gray-500 mb-1">
+                      Năm sản xuất
+                    </label>
+                    <select
+                      name="year"
+                      defaultValue=""
+                      className="w-full h-10 px-2.5 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:ring-1 focus:ring-toyota-red"
+                    >
+                      <option value="">Tất cả năm</option>
+                      <option value="2024">2024</option>
+                      <option value="2023">2023</option>
+                      <option value="2022">2022</option>
+                      <option value="2021">2021</option>
+                      <option value="2020">2020</option>
+                    </select>
+                  </div>
+
+                  {/* Select Mức giá */}
+                  <div>
+                    <label className="block text-[11px] font-semibold text-gray-500 mb-1">
+                      Mức giá
                     </label>
                     <select
                       name="maxPrice"
-                      className="w-full h-11 px-3 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-toyota-red font-medium"
                       defaultValue=""
+                      className="w-full h-10 px-2.5 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:ring-1 focus:ring-toyota-red"
                     >
                       <option value="">Tất cả mức giá</option>
-                      <option value="550000000">Dưới 550 triệu</option>
-                      <option value="750000000">Dưới 750 triệu</option>
-                      <option value="900000000">Dưới 900 triệu</option>
-                      <option value="1200000000">Dưới 1.2 tỷ</option>
+                      <option value="500000000">Dưới 500 triệu</option>
+                      <option value="700000000">500 - 700 triệu</option>
+                      <option value="1000000000">700 - 1 tỷ</option>
+                      <option value="1500000000">Trên 1 tỷ</option>
                     </select>
                   </div>
 
-                  <div className="flex items-end">
+                  {/* Search CTA */}
+                  <div className="col-span-2 md:col-span-4 lg:col-span-1">
                     <button
                       type="submit"
-                      className="w-full h-11 inline-flex items-center justify-center gap-2 px-4 rounded-lg bg-toyota-red text-white text-sm font-bold shadow-md hover:bg-toyota-hover active:scale-[0.98] transition-all"
+                      className="w-full h-10 px-3 bg-toyota-red hover:bg-toyota-hover text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm active:scale-[0.98] transition-all"
                     >
-                      <Search className="w-4 h-4" />
+                      <Search className="w-3.5 h-3.5" />
                       <span>Tìm xe</span>
                     </button>
                   </div>
                 </form>
               </div>
-
-              {/* Fast links */}
-              <div className="flex flex-wrap items-center gap-2 pt-2 text-xs text-gray-300">
-                <span className="text-gray-400">Dòng xe được tìm nhiều:</span>
-                {["Camry", "Fortuner", "Corolla Cross", "Vios"].map((m) => (
-                  <Link
-                    key={m}
-                    href={`/xe-cu?model=${encodeURIComponent(m)}`}
-                    className="px-2.5 py-1 rounded-full bg-white/10 hover:bg-toyota-red hover:text-white transition-colors border border-white/10"
-                  >
-                    {m}
-                  </Link>
-                ))}
-              </div>
             </div>
 
-            {/* Right Column: Hero Visual Showcase */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 group">
-                <div className="relative aspect-[4/3] w-full">
+            {/* Right Column: Spotlight Featured Card (Toyota Camry 2.5Q) */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border border-gray-200/80 bg-zinc-950 group">
+                {/* Badge top-left: Xe nổi bật */}
+                <div className="absolute top-3.5 left-3.5 z-20">
+                  <span className="px-3 py-1 rounded-md text-xs font-bold bg-toyota-red text-white shadow-md">
+                    Xe nổi bật
+                  </span>
+                </div>
+
+                {/* Car Photo */}
+                <div className="relative aspect-[16/10] w-full overflow-hidden">
                   <Image
-                    src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=1200&q=80"
-                    alt="Toyota Camry Showroom"
+                    src="/images/camry-2022.jpg"
+                    alt="Toyota Camry 2.5Q 2022"
                     fill
                     priority
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    sizes="(max-width: 1024px) 100vw, 500px"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                  {/* Subtle dark gradient overlay at bottom for text contrast */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-transparent" />
                 </div>
 
-                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-black/60 backdrop-blur-md border border-white/15 text-white">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <span className="text-xs uppercase tracking-wider text-toyota-red font-bold">
-                        Đang có tại showroom
-                      </span>
-                      <h4 className="text-lg font-bold">Toyota Camry 2.0Q 2022</h4>
-                      <p className="text-xs text-gray-300">Chỉ từ 920.000.000 VNĐ • Trả trước 20%</p>
-                    </div>
+                {/* Spotlight Overlay Content */}
+                <div className="p-4 sm:p-5 text-white">
+                  <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                    Toyota Camry 2.5Q 2022
+                  </h3>
+
+                  {/* Spec Row */}
+                  <div className="flex items-center gap-4 text-xs text-gray-300 mb-3">
+                    <span className="inline-flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5 text-gray-400" />
+                      2022
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <CarIcon className="w-3.5 h-3.5 text-gray-400" />
+                      Sedan
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <Gauge className="w-3.5 h-3.5 text-gray-400" />
+                      45.000 km
+                    </span>
+                  </div>
+
+                  {/* Price & Red Arrow Button */}
+                  <div className="flex items-center justify-between pt-1 border-t border-zinc-800">
+                    <span className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+                      920.000.000 đ
+                    </span>
                     <Link
-                      href="/xe-cu/toyota-camry-2-0q-2022"
-                      className="p-2.5 rounded-full bg-toyota-red text-white hover:bg-white hover:text-toyota-red transition-all shadow-md"
+                      href="/xe-cu/toyota-camry-2-5q-2022"
+                      className="w-9 h-9 rounded-full bg-toyota-red hover:bg-toyota-hover flex items-center justify-center text-white transition-all shadow-md group-hover:scale-105 active:scale-95"
+                      aria-label="Xem chi tiết Toyota Camry 2.5Q"
                     >
-                      <ArrowRight className="w-5 h-5" />
+                      <ArrowRight className="w-4 h-4" />
                     </Link>
                   </div>
-                </div>
-              </div>
-
-              {/* Floating Trust Badge */}
-              <div className="absolute -bottom-6 -left-6 hidden sm:flex items-center gap-3 p-3.5 rounded-2xl bg-white text-charcoal shadow-xl border border-gray-100">
-                <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-600">
-                  <ShieldCheck className="w-6 h-6" />
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-gray-900">Chuẩn 176 hạng mục</div>
-                  <div className="text-[11px] text-gray-500">Bảo hành chính hãng Toyota</div>
                 </div>
               </div>
             </div>
@@ -175,155 +218,182 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 2. DÒNG XE NỔI BẬT (FEATURED CARS) */}
-      <section className="py-16 sm:py-20 bg-gray-50/50">
+      {/* =========================================================================
+          SECTION 2: SHOWROOM INVENTORY (XE ĐÃ QUA SỬ DỤNG MỚI VỀ SHOWROOM)
+          ========================================================================= */}
+      <section className="py-16 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+          {/* Header Row */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
             <div>
-              <div className="inline-flex items-center gap-1.5 text-toyota-red text-xs font-bold uppercase tracking-wider mb-2">
-                <Award className="w-4 h-4" />
-                Kho xe tuyển chọn
+              <div className="flex items-center gap-2 text-xs font-bold tracking-widest text-toyota-red uppercase mb-2">
+                <span className="w-5 h-0.5 bg-toyota-red inline-block" />
+                <span>XE ĐÃ QUA SỬ DỤNG</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-charcoal-heading">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
                 Xe Đã Qua Sử Dụng Mới Về Showroom
               </h2>
-              <p className="text-sm text-gray-500 mt-1">
-                Tất cả các dòng xe đều có sẵn tại showroom Toyota Biên Hoà, sẵn sàng giao ngay.
+              <p className="text-xs sm:text-sm text-gray-500 mt-1.5 max-w-xl">
+                Đa dạng mẫu mã, kiểm định chất lượng, bảo hành chính hãng, hỗ trợ tài chính linh hoạt.
               </p>
             </div>
 
             <Link
               href="/xe-cu"
-              className="inline-flex items-center gap-2 text-sm font-bold text-toyota-red hover:text-toyota-hover group"
+              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-toyota-red hover:underline shrink-0 group"
             >
-              <span>Xem tất cả kho xe ({allCars.length} xe)</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <span>Xem tất cả xe đã qua sử dụng</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
 
-          {/* Cars Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {/* 6 Car Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 mb-12">
             {featuredCars.map((car) => (
               <CarCard key={car._id} car={car} />
             ))}
           </div>
 
-          {/* Bottom CTA to View All */}
-          <div className="mt-12 text-center">
+          {/* Center CTA Button */}
+          <div className="flex justify-center">
             <Link
               href="/xe-cu"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-toyota-red text-white font-bold text-sm shadow-md hover:bg-toyota-hover active:scale-[0.98] transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-toyota-red hover:bg-toyota-hover text-white text-xs sm:text-sm font-bold shadow-md active:scale-[0.98] transition-all group"
             >
-              <span>Xem toàn bộ danh sách xe đã qua sử dụng</span>
-              <ArrowRight className="w-4 h-4" />
+              <CarIcon className="w-4 h-4" />
+              <span>Xem thêm xe đã qua sử dụng khác</span>
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 3. CAM KẾT CHẤT LƯỢNG TOYOTA SURE (176 HẠNG MỤC) */}
-      <section id="cam-ket" className="py-16 sm:py-24 bg-white border-t border-gray-100">
+      {/* =========================================================================
+          SECTION 3: 4 CAM KẾT VÀNG KHI MUA XE TẠI TOYOTA BIÊN HÒA
+          ========================================================================= */}
+      <section className="py-16 sm:py-20 bg-[#FAFAFA] border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-toyota-light text-toyota-red text-xs font-bold">
-              <ShieldCheck className="w-4 h-4" />
-              Tiêu Chuẩn Toyota Sure Toàn Quốc
+          {/* Section Header */}
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-xs font-bold tracking-widest text-toyota-red uppercase block mb-2">
+              VÌ SAO NÊN CHỌN TOYOTA BIÊN HÒA
             </span>
-            <h2 className="text-2xl sm:text-4xl font-black text-charcoal-heading">
-              4 Cam Kết Vàng Khi Mua Xe Tại Toyota Biên Hoà
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight mb-3">
+              4 Cam Kết Vàng Khi Mua Xe Tại Toyota Biên Hòa
             </h2>
-            <p className="text-sm sm:text-base text-gray-500">
-              Mỗi chiếc xe mang logo Toyota Sure là lời khẳng định uy tín vững chắc từ đội ngũ kỹ sư chuyên môn cao.
+            <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
+              Mỗi chiếc xe đã qua sử dụng tại Toyota Biên Hòa đều được kiểm tra kỹ lưỡng và cam kết chất lượng, mang đến sự an tâm tuyệt đối cho khách hàng.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* 4 Commitments Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Cam kết 1 */}
-            <div className="p-6 rounded-2xl bg-gray-50/80 border border-gray-100 hover:border-toyota-red/30 transition-all hover:shadow-card">
-              <div className="w-12 h-12 rounded-xl bg-toyota-red/10 text-toyota-red flex items-center justify-center mb-5">
-                <FileCheck className="w-6 h-6" />
+            <div className="bg-white rounded-2xl p-6 border border-gray-150 shadow-sm hover:shadow-md transition-all duration-200">
+              <div className="w-12 h-12 rounded-xl bg-red-50 text-toyota-red flex items-center justify-center border border-red-100/60 mb-5">
+                <Shield className="w-6 h-6 text-toyota-red" />
               </div>
-              <h3 className="text-lg font-bold text-charcoal-heading mb-2">
-                176 Hạng Mục Kiểm Tra
+              <h3 className="text-base font-bold text-gray-900 mb-2">
+                Xe Chính Hãng Toyota
               </h3>
-              <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
-                Được kiểm định chi tiết từ động cơ, hộp số, khung gầm, hệ thống điện đến nội ngoại thất bởi chuyên viên kỹ thuật chuẩn Toyota.
+              <p className="text-xs text-gray-500 leading-relaxed">
+                Tất cả xe đều là xe Toyota chính hãng, nguồn gốc rõ ràng, minh bạch, được kiểm định chất lượng nghiêm ngặt.
               </p>
             </div>
 
             {/* Cam kết 2 */}
-            <div className="p-6 rounded-2xl bg-gray-50/80 border border-gray-100 hover:border-toyota-red/30 transition-all hover:shadow-card">
-              <div className="w-12 h-12 rounded-xl bg-toyota-red/10 text-toyota-red flex items-center justify-center mb-5">
-                <ShieldCheck className="w-6 h-6" />
+            <div className="bg-white rounded-2xl p-6 border border-gray-150 shadow-sm hover:shadow-md transition-all duration-200">
+              <div className="w-12 h-12 rounded-xl bg-red-50 text-toyota-red flex items-center justify-center border border-red-100/60 mb-5">
+                <ShieldCheck className="w-6 h-6 text-toyota-red" />
               </div>
-              <h3 className="text-lg font-bold text-charcoal-heading mb-2">
-                Không Đâm Đụng & Thủy Kích
+              <h3 className="text-base font-bold text-gray-900 mb-2">
+                Bảo Hành Chính Hãng
               </h3>
-              <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
-                Cam kết bằng văn bản xe không tai nạn ảnh hưởng kết cấu khung xe, không ngập nước, keo chỉ nguyên bản 100%.
+              <p className="text-xs text-gray-500 leading-relaxed">
+                Áp dụng chế độ bảo hành chính hãng và hỗ trợ kỹ thuật từ đội ngũ chuyên nghiệp, tận tâm.
               </p>
             </div>
 
             {/* Cam kết 3 */}
-            <div className="p-6 rounded-2xl bg-gray-50/80 border border-gray-100 hover:border-toyota-red/30 transition-all hover:shadow-card">
-              <div className="w-12 h-12 rounded-xl bg-toyota-red/10 text-toyota-red flex items-center justify-center mb-5">
-                <Wrench className="w-6 h-6" />
+            <div className="bg-white rounded-2xl p-6 border border-gray-150 shadow-sm hover:shadow-md transition-all duration-200">
+              <div className="w-12 h-12 rounded-xl bg-red-50 text-toyota-red flex items-center justify-center border border-red-100/60 mb-5">
+                <Target className="w-6 h-6 text-toyota-red" />
               </div>
-              <h3 className="text-lg font-bold text-charcoal-heading mb-2">
-                Bảo Hành Chính Hãng
+              <h3 className="text-base font-bold text-gray-900 mb-2">
+                Hỗ Trợ Tài Chính Linh Hoạt
               </h3>
-              <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
-                Bảo hành động cơ và hộp số lên tới 1 năm hoặc 20.000 km. Hỗ trợ cứu hộ 24/7 trên toàn quốc thông qua hệ thống đại lý.
+              <p className="text-xs text-gray-500 leading-relaxed">
+                Hỗ trợ vay ngân hàng với lãi suất ưu đãi, thủ tục đơn giản, nhanh chóng.
               </p>
             </div>
 
             {/* Cam kết 4 */}
-            <div className="p-6 rounded-2xl bg-gray-50/80 border border-gray-100 hover:border-toyota-red/30 transition-all hover:shadow-card">
-              <div className="w-12 h-12 rounded-xl bg-toyota-red/10 text-toyota-red flex items-center justify-center mb-5">
-                <CheckCircle className="w-6 h-6" />
+            <div className="bg-white rounded-2xl p-6 border border-gray-150 shadow-sm hover:shadow-md transition-all duration-200">
+              <div className="w-12 h-12 rounded-xl bg-red-50 text-toyota-red flex items-center justify-center border border-red-100/60 mb-5">
+                <Headphones className="w-6 h-6 text-toyota-red" />
               </div>
-              <h3 className="text-lg font-bold text-charcoal-heading mb-2">
-                Pháp Lý Rõ Ràng & Minh Bạch
+              <h3 className="text-base font-bold text-gray-900 mb-2">
+                Dịch Vụ Hậu Mãi Chu Đáo
               </h3>
-              <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
-                Hồ sơ pháp lý hợp lệ, không tranh chấp, không phạt nguội. Hỗ trợ rút hồ sơ gốc và thủ tục sang tên bấm biển nhanh chóng.
+              <p className="text-xs text-gray-500 leading-relaxed">
+                Đội ngũ kỹ thuật viên giàu kinh nghiệm, phụ tùng chính hãng, chăm sóc xe trọn đời.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. CALL TO ACTION & DỊCH VỤ THU MUA */}
-      <section className="py-16 bg-charcoal text-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-3">
-              <span className="text-toyota-red text-xs font-bold uppercase tracking-wider">
-                Thu Mua & Đổi Xe Cũ Lấy Xe Mới
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-black">
-                Bạn Có Nhu Cầu Định Giá Hoặc Bán Lại Chiếc Xe Của Mình?
-              </h2>
-              <p className="text-sm text-gray-300 max-w-2xl leading-relaxed">
-                Toyota Biên Hoà nhận thu mua tất cả các dòng xe đã qua sử dụng với mức giá tốt nhất thị trường Đồng Nai và Đông Nam Bộ. Định giá miễn phí tận nơi, giải ngân tiền mặt ngay trong ngày.
-              </p>
+      {/* =========================================================================
+          SECTION 4: TRADE-IN / CAR VALUATION BANNER
+          ========================================================================= */}
+      <section className="relative overflow-hidden bg-[#0A0D14] text-white py-14 sm:py-18">
+        {/* Background Car Headlight Image on right */}
+        <div className="absolute right-0 top-0 bottom-0 w-full lg:w-1/2 pointer-events-none">
+          <Image
+            src="/images/cta-camry.jpg"
+            alt="Toyota Camry Headlight"
+            fill
+            className="object-cover object-center lg:object-right opacity-85"
+          />
+          {/* Smooth black gradient fade to left */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0A0D14] via-[#0A0D14]/85 to-transparent lg:from-[#0A0D14] lg:via-[#0A0D14]/50 lg:to-transparent" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+          <div className="max-w-xl space-y-4">
+            {/* Tag line */}
+            <div className="flex items-center gap-2 text-xs font-bold tracking-widest text-toyota-red uppercase">
+              <span className="w-5 h-0.5 bg-toyota-red inline-block" />
+              <span>SẴN SÀNG ĐỒNG HÀNH CÙNG BẠN</span>
             </div>
 
-            <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
+            {/* Heading */}
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
+              Bạn Có Nhu Cầu Định Giá Hoặc Bán Lại Chiếc Xe Của Mình?
+            </h2>
+
+            {/* Description */}
+            <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
+              Toyota Biên Hòa hỗ trợ định giá xe nhanh chóng, minh bạch và chuyên nghiệp. Liên hệ ngay để được tư vấn và hỗ trợ tốt nhất.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-3">
               <a
-                href="tel:0918565656"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-toyota-red text-white text-sm font-bold shadow-lg hover:bg-toyota-hover transition-all"
+                href="tel:0938820355"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-toyota-red hover:bg-toyota-hover text-white text-xs sm:text-sm font-bold shadow-md transition-all active:scale-[0.98]"
               >
                 <Phone className="w-4 h-4" />
-                <span>Hotline: 0918 565 656</span>
+                <span>Hotline: 0938 820 355</span>
               </a>
 
               <Link
-                href="/xe-cu"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-zinc-800 text-white text-sm font-bold border border-zinc-700 hover:bg-zinc-700 transition-all"
+                href="/xe-cu#dinh-gia"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-gray-700 bg-black/40 hover:bg-white/10 text-gray-200 hover:text-white text-xs sm:text-sm font-semibold transition-all group"
               >
-                <span>Xem danh mục xe hiện có</span>
-                <ChevronRight className="w-4 h-4" />
+                <MessageSquare className="w-4 h-4 text-gray-400 group-hover:text-white" />
+                <span>Được tư vấn miễn phí</span>
+                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
           </div>
